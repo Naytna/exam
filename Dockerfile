@@ -18,7 +18,7 @@ WORKDIR /root/Nikolaev_221_3210/
 COPY . /root/Nikolaev_221_3210/
 
 
-RUN qmake hallServer.pro
+RUN qmake -qt5 hallServer.pro
 RUN make
 
 ENTRYPOINT ["./hallServer"]
