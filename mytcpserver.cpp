@@ -1,13 +1,12 @@
 #include "mytcpserver.h"
-const int port = 55555;
+const int port = 33333;
 
 
-MyTcpServer::MyTcpServer() // Конструктор
+MyTcpServer::MyTcpServer() 
 {
     if(this->listen(QHostAddress::Any, port)){
         server_status=1;
         qDebug() << "\r\nserver is started in port #" << port;
-        qDebug() << "putty -telnet localhost" << port << "\r\n";
     } else {
         qDebug() << "server is not started";
     }
@@ -19,7 +18,6 @@ MyTcpServer::MyTcpServer() // Конструктор
 void MyTcpServer::incomingConnection(qintptr socketDescriptor){
         oneSocket = new QTcpSocket;
         oneSocket->setSocketDescriptor(socketDescriptor);
-        oneSocket -> write("I am start!\r\n");
 
         qDebug() << "Connect client: " << socketDescriptor;
         connect(oneSocket, &QTcpSocket::readyRead, this, &MyTcpServer::slotServerRead);
@@ -34,7 +32,7 @@ void MyTcpServer::slotServerRead(){
 
     if (res == "disconnect")
         {
-            oneSocket -> write("\r\nU r Disconnected\r\nBye Bye\r\n\r\n");
+            oneSocket -> write("\r\nDisconnect\r\n");
             slotClientDisconnected();
         }
     else
